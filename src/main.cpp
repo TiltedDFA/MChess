@@ -6,10 +6,13 @@ int main()
 {
     //Debug::print_bb(BitBoard::piece_masks[0][0],0);
     //Debug::print_bb(BitBoard::normal_knight_zone);
-    //for(int i =0; i < 64; ++i){
-      //  Debug::print_bb(BitBoard::knight_move_masks[i],i);
-    //}
-    Debug::print_bb(BitBoard::FILE_B);
+    
+    for(int i =0; i < 64; ++i){
+        Debug::print_bb(BitBoard::knight_move_masks[i],i,false);
+    }
+    
+    //Debug::print_bb(BitBoard::KNIGHT_EIGHTEENTH_POS,18,false);
+    //Debug::print_bb(BitBoard::FILE_B);
     /*
     std::cout << "File A\n";
     Debug::print_bb(BitBoard::FILE_A,true);

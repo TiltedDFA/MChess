@@ -6,9 +6,10 @@
 typedef unsigned long long bit_board;
 namespace BitBoard{
 
-    constexpr bit_board KNIGHT_EIGHTEEN= 0x00003C3C3C3C0000;
     constexpr bit_board FILE_A = 0x0101010101010101;
     constexpr bit_board FILE_B = 0x0202020202020202;
+    constexpr bit_board FILE_F = 0x2020202020202020;
+    constexpr bit_board FILE_G = 0x4040404040404040;
     constexpr bit_board FILE_H = 0x8080808080808080;
     constexpr bit_board RANK_1 = 0x00000000000000FF;
     constexpr bit_board RANK_8 = 0xFF00000000000000;
@@ -18,12 +19,32 @@ namespace BitBoard{
         std::array<bit_board,64> returnVal{};
         for(int i =0; i < 64; ++i){
             const int dif = i - 18;
-            if(dif > -1){
-                returnVal[i] = KNIGHT_EIGHTEENTH_POS << dif;
+            bit_board mask{0};
+            if(dif > -1)
+            {
+                mask = KNIGHT_EIGHTEENTH_POS << dif;
             }
-            else{
-                returnVal[i] = KNIGHT_EIGHTEENTH_POS >> std::abs(dif);
+            else
+            {
+                mask = KNIGHT_EIGHTEENTH_POS >> std::abs(dif);
             }
+            if(((1ull << i) | FILE_B) == FILE_B)
+            {
+                mask = (~FILE_H) & mask;
+            }
+            else if (((1ull << i) | FILE_A) == FILE_A)
+            {
+                mask = ~(FILE_H | FILE_G) & mask;
+            }
+            else if(((1ull << i) | FILE_G) == FILE_G)
+            {
+                mask = (~FILE_A) & mask;
+            }
+            else if (((1ull << i) | FILE_H) == FILE_H)
+            {
+                mask = (~(FILE_A | FILE_B)) & mask;
+            }
+           returnVal[i] = mask;
         }
         return returnVal;
     }
