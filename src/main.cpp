@@ -1,18 +1,21 @@
 
 #include "Debug.hpp"
 #include <iostream>
+#include "Move.hpp"
 #include <SFML/Graphics.hpp>
 int main()
 {
     //Debug::print_bb(BitBoard::piece_masks[0][0],0);
     //Debug::print_bb(BitBoard::normal_knight_zone);
     
-    for(int i =0; i < 64; ++i){
-        Debug::print_bb(BitBoard::knight_move_masks[i],i,false);
+    for(int i =0; i < 64; ++i)
+    {
+        Debug::print_bb(BitBoard::KING_MOVE_MASKS[i],i,false);
     }
-    
+    std::cout << Moves::encode_move(5,13,1,0) << std::endl;
     //Debug::print_bb(BitBoard::KNIGHT_EIGHTEENTH_POS,18,false);
-    //Debug::print_bb(BitBoard::FILE_B);
+    //Debug::print_bb(BitBoard::FILE_H);
+    //Debug::print_bb(BitBoard::FILE_A);
     /*
     std::cout << "File A\n";
     Debug::print_bb(BitBoard::FILE_A,true);

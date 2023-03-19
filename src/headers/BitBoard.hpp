@@ -3,7 +3,8 @@
 #include <array>
 #include <vector>
 #include <cmath>
-typedef unsigned long long bit_board;
+#include <cstdint>
+typedef uint64_t bit_board;
 namespace BitBoard{
 
     constexpr bit_board FILE_A = 0x0101010101010101;
@@ -13,6 +14,7 @@ namespace BitBoard{
     constexpr bit_board FILE_H = 0x8080808080808080;
     constexpr bit_board RANK_1 = 0x00000000000000FF;
     constexpr bit_board RANK_8 = 0xFF00000000000000;
+    constexpr std::array<int,8> MOVE_DIRECTIONS = {8,1,-8,-1,9,-7,-9,7};//n,e,s,w,ne,se,sw,nw
     constexpr bit_board KNIGHT_EIGHTEENTH_POS=0b00000000000000000000101000010001000000000001000100001010;
     inline constexpr std::array<bit_board, 64> compute_knight_moves()
     {
@@ -97,7 +99,29 @@ namespace BitBoard{
         }
         return temp_arry;
     }
+    [[nodiscard]]inline constexpr bool in_board(int index){
+        return index < 64 && index > 0;
+    }
+    inline constexpr std::array<bit_board, 64> compute_king_moves(){
+        std::array<bit_board,64> returnVal{};
+        for(int i = 0; i < 64;++i)
+        {
+            bit_board mask{0};
+            for(const int direction : MOVE_DIRECTIONS)
+            {
+                if(in_board(i+direction))
+                    mask |= 1ull << (i+direction);
+            }
+            if(((1ull << i) | FILE_H) == FILE_H)
+                mask &= ~FILE_A;
+            else if(((1ull << i) | FILE_A) == FILE_A)
+                mask &= ~FILE_H;
+            returnVal[i] = mask;
+        }
+        return returnVal;
+    }
     
-    constexpr std::array<std::array<bit_board,8>,64> piece_masks = compute_sliding_masks();
-    constexpr std::array<bit_board,64> knight_move_masks = compute_knight_moves();
+    constexpr std::array<std::array<bit_board,8>,64> SLIDING_PIECE_MASKS = compute_sliding_masks();
+    constexpr std::array<bit_board,64> KNIGHT_MOVE_MASKS = compute_knight_moves();
+    constexpr std::array<bit_board,64> KING_MOVE_MASKS = compute_king_moves();
 }
