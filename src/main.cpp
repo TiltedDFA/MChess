@@ -1,18 +1,20 @@
-
 #include "Debug.hpp"
 #include <iostream>
 #include "Move.hpp"
 #include <SFML/Graphics.hpp>
+#include "MoveGen.hpp"
+#include <bitset>
 int main()
 {
     //Debug::print_bb(BitBoard::piece_masks[0][0],0);
     //Debug::print_bb(BitBoard::normal_knight_zone);
-    
-    for(int i =0; i < 64; ++i)
+    MoveGen::init();
+    std::vector<move_t> pawn_moves = MoveGen::white_pawn_moves(BitBoard::RANK_2,-1);
+    for(const auto i : pawn_moves)
     {
-        Debug::print_bb(BitBoard::KING_MOVE_MASKS[i],i,false);
+        Debug::print_encoded_move_str(i);  
+        std::cout << "\n" <<  std::endl;
     }
-    std::cout << Moves::encode_move(5,13,1,0) << std::endl;
     //Debug::print_bb(BitBoard::KNIGHT_EIGHTEENTH_POS,18,false);
     //Debug::print_bb(BitBoard::FILE_H);
     //Debug::print_bb(BitBoard::FILE_A);
@@ -24,30 +26,3 @@ int main()
     */
     return 0;
 }
-
-/*
-#include <SFML/Graphics.hpp>
-
-int main()
-{
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
-
-    return 0;
-}
-*/

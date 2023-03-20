@@ -1,22 +1,44 @@
-#pragma once
+#ifndef BITBOARD_HPP
+#define BITBOARD_HPP
 #include <iostream>
 #include <array>
-#include <vector>
 #include <cmath>
 #include <cstdint>
 typedef uint64_t bit_board;
+typedef struct CBoard{
+    constexpr CBoard():
+        wk(0),wq(0),wb(0),wn(0),wr(0),wp(0),
+        bk(0),bq(0),bb(0),bn(0),br(0),bp(0)
+    {};
+    bit_board wk;
+    bit_board wq;
+    bit_board wb;
+    bit_board wn;
+    bit_board wr;
+    bit_board wp;
+    bit_board bk;
+    bit_board bq;
+    bit_board bb;
+    bit_board bn;
+    bit_board br;
+    bit_board bp;
+}CBoard;
 namespace BitBoard{
-
     constexpr bit_board FILE_A = 0x0101010101010101;
     constexpr bit_board FILE_B = 0x0202020202020202;
     constexpr bit_board FILE_F = 0x2020202020202020;
     constexpr bit_board FILE_G = 0x4040404040404040;
     constexpr bit_board FILE_H = 0x8080808080808080;
+
     constexpr bit_board RANK_1 = 0x00000000000000FF;
+    constexpr bit_board RANK_2 = 0x000000000000FF00;
+    constexpr bit_board RANK_4 = 0x00000000FF000000;
+    constexpr bit_board RANK_5 = 0x000000FF00000000;
     constexpr bit_board RANK_8 = 0xFF00000000000000;
+
     constexpr std::array<int,8> MOVE_DIRECTIONS = {8,1,-8,-1,9,-7,-9,7};//n,e,s,w,ne,se,sw,nw
     constexpr bit_board KNIGHT_EIGHTEENTH_POS=0b00000000000000000000101000010001000000000001000100001010;
-    inline constexpr std::array<bit_board, 64> compute_knight_moves()
+    constexpr std::array<bit_board, 64> compute_knight_moves()
     {
         std::array<bit_board,64> returnVal{};
         for(int i =0; i < 64; ++i){
@@ -50,7 +72,7 @@ namespace BitBoard{
         }
         return returnVal;
     }
-    inline constexpr std::array<std::array<bit_board,8>,64> compute_sliding_masks(){
+    constexpr std::array<std::array<bit_board,8>,64> compute_sliding_masks(){
         std::array<std::array<bit_board,8>,64> temp_arry{};
         for(int sq = 0; sq < 64;++sq){
             bit_board north{0};
@@ -102,7 +124,7 @@ namespace BitBoard{
     [[nodiscard]]inline constexpr bool in_board(int index){
         return index < 64 && index > 0;
     }
-    inline constexpr std::array<bit_board, 64> compute_king_moves(){
+    constexpr std::array<bit_board, 64> compute_king_moves(){
         std::array<bit_board,64> returnVal{};
         for(int i = 0; i < 64;++i)
         {
@@ -125,3 +147,4 @@ namespace BitBoard{
     constexpr std::array<bit_board,64> KNIGHT_MOVE_MASKS = compute_knight_moves();
     constexpr std::array<bit_board,64> KING_MOVE_MASKS = compute_king_moves();
 }
+#endif
