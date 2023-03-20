@@ -1,9 +1,12 @@
 #ifndef DEBUG_HPP
 #define DEBUG_HPP
 #include "BitBoard.hpp"
+#include <vector>
+#include <string_view>
 #include "Move.hpp"
 #include <bitset>
 namespace Debug{
+    #define STARTING_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
     std::string piece_type_to_str(piece_type_t piece){
         switch (piece)
         {
@@ -85,6 +88,45 @@ namespace Debug{
     }
     void print_encoded_move_bin(move_t move){
         std::cout << std::bitset<32>(move) << std::endl;
+    }
+    void print_all_gen_moves(const std::vector<move_t>& move_list, bool mirrored = true){
+        int start{0},end{0};
+        bool capture{false};
+        int type{0};
+        bit_board board{0};
+        for(const auto i : move_list){
+            Moves::decode_move(i,start,end,type,capture);
+            board |= 1ull << end;
+            print_bb(board,start,mirrored);
+            board = 0;
+        }
+    }
+    void print_entire_board(const CBoard& board){
+        std::cout << "wk" << std::endl;
+        print_bb(board.wk,true);
+        std::cout << "wq" << std::endl;
+        print_bb(board.wq,true);
+        std::cout << "wb" << std::endl;
+        print_bb(board.wb,true);
+        std::cout << "wn" << std::endl;
+        print_bb(board.wn,true);
+        std::cout << "wr" << std::endl;
+        print_bb(board.wr,true);
+        std::cout << "wp" << std::endl;
+        print_bb(board.wp,true);
+
+        std::cout << "bk" << std::endl;
+        print_bb(board.bk,true);
+        std::cout << "bq" << std::endl;
+        print_bb(board.bq,true);
+        std::cout << "bb" << std::endl;
+        print_bb(board.bb,true);
+        std::cout << "bn" << std::endl;
+        print_bb(board.bn,true);
+        std::cout << "br" << std::endl;
+        print_bb(board.br,true);
+        std::cout << "bp" << std::endl;
+        print_bb(board.bp,true);
     }
 }
 #endif

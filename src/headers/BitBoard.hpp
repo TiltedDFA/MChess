@@ -5,11 +5,12 @@
 #include <cmath>
 #include <cstdint>
 typedef uint64_t bit_board;
-typedef struct CBoard{
+struct CBoard{
     constexpr CBoard():
         wk(0),wq(0),wb(0),wn(0),wr(0),wp(0),
         bk(0),bq(0),bb(0),bn(0),br(0),bp(0)
     {};
+    
     bit_board wk;
     bit_board wq;
     bit_board wb;
@@ -22,7 +23,26 @@ typedef struct CBoard{
     bit_board bn;
     bit_board br;
     bit_board bp;
-}CBoard;
+};
+struct FullBoard
+{
+    constexpr FullBoard():
+        boards(),castling(true,true,true,true),en_pesant_target_sq(-1),
+        is_whites_turn(true),num_half_moves(0),num_full_moves(0)
+    {};
+    std::array<std::string,6> split(std::string fen);
+    void load_from_fen(const std::string& fen);
+    void init_piece(char type, int board_x, int board_y);
+    static bit_board board_cord_to_bit(int board_x, int board_y);
+
+    CBoard boards;
+    //wk, wq, bk, bq
+    bool castling[4];
+    int en_pesant_target_sq;
+    bool is_whites_turn;
+    int num_half_moves;
+    int num_full_moves;
+};
 namespace BitBoard{
     constexpr bit_board FILE_A = 0x0101010101010101;
     constexpr bit_board FILE_B = 0x0202020202020202;
@@ -32,6 +52,7 @@ namespace BitBoard{
 
     constexpr bit_board RANK_1 = 0x00000000000000FF;
     constexpr bit_board RANK_2 = 0x000000000000FF00;
+    constexpr bit_board RANK_3 = 0x0000000000FF0000;
     constexpr bit_board RANK_4 = 0x00000000FF000000;
     constexpr bit_board RANK_5 = 0x000000FF00000000;
     constexpr bit_board RANK_8 = 0xFF00000000000000;
@@ -142,7 +163,6 @@ namespace BitBoard{
         }
         return returnVal;
     }
-    
     constexpr std::array<std::array<bit_board,8>,64> SLIDING_PIECE_MASKS = compute_sliding_masks();
     constexpr std::array<bit_board,64> KNIGHT_MOVE_MASKS = compute_knight_moves();
     constexpr std::array<bit_board,64> KING_MOVE_MASKS = compute_king_moves();

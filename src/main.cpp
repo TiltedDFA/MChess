@@ -1,7 +1,7 @@
 #include "Debug.hpp"
 #include <iostream>
 #include "Move.hpp"
-#include <SFML/Graphics.hpp>
+//#include <SFML/Graphics.hpp>
 #include "MoveGen.hpp"
 #include <bitset>
 int main()
@@ -9,12 +9,13 @@ int main()
     //Debug::print_bb(BitBoard::piece_masks[0][0],0);
     //Debug::print_bb(BitBoard::normal_knight_zone);
     MoveGen::init();
-    std::vector<move_t> pawn_moves = MoveGen::white_pawn_moves(BitBoard::RANK_2,-1);
-    for(const auto i : pawn_moves)
-    {
-        Debug::print_encoded_move_str(i);  
-        std::cout << "\n" <<  std::endl;
-    }
+    FullBoard instance;
+    instance.load_from_fen(STARTING_FEN);
+    instance.boards.bp = 0x0F00000000FF0000;
+    MoveGen::update_data(instance.boards);
+    //Debug::print_entire_board(instance.boards);
+    std::vector<move_t> pawn_moves = MoveGen::white_pawn_moves(BitBoard::RANK_2,17);
+    Debug::print_all_gen_moves(pawn_moves,false);
     //Debug::print_bb(BitBoard::KNIGHT_EIGHTEENTH_POS,18,false);
     //Debug::print_bb(BitBoard::FILE_H);
     //Debug::print_bb(BitBoard::FILE_A);
