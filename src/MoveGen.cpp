@@ -137,7 +137,25 @@ namespace MoveGen
         }
         return possible_moves;
     }
+    
+    
     std::vector<move_t> bishop_moves(bit_board bishops, bool is_white){
         return std::vector<move_t>{};
+        for(int i = __builtin_ctzll(bishops);i < 64;++i){
+            if(!(((bishops >> i) & 1) == 1))
+                continue;
+            for(int j = 0; j < 4;++j){
+                if(BitBoard::SLIDING_PIECE_MASKS[i][j] == 0) continue;
+                //generates a mask with possible moves removing any occupied
+                //with the same colour
+                const bit_board moves = 
+                    BitBoard::SLIDING_PIECE_MASKS[i][j]&
+                    ~(BitBoard::SLIDING_PIECE_MASKS[i][j]&
+                    (is_white ? WHITE_PIECES : BLACK_PIECES));
+                            
+
+            }
+        }
     }
+ 
 }

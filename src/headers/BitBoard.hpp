@@ -81,7 +81,7 @@ namespace BitBoard{
             {
                 mask = ~(FILE_H | FILE_G) & mask;
             }
-            else if(((1ull << i) | FILE_G) == FILE_G)
+            else if(((1ull << i) | FILE_G) == FIL   E_G)
             {
                 mask = (~FILE_A) & mask;
             }
@@ -117,14 +117,14 @@ namespace BitBoard{
             for(int c = col-1; c >= 0;--c){
                 west |= 1ull << (c + row*8);
             }
-            for(int r = row + 1, c = col - 1; r < 8 && c >= 0;++r,--c){
+            for(int r = row + 1, c = col - 1; r < 8 && c > 0;++r,--c){
                 north_east |= 1ull << ((r * 8) + c);
             }
-            for(int r = row - 1, c = col - 1; r >= 0 && c >= 0;--r,--c){
+            for(int r = row - 1, c = col - 1; r > -1 && c > -1;--r,--c){
                 south_east |= 1ull << ((r * 8) + c);
             }
             for(int r = row - 1, c = col + 1; r >= 0 && c < 8;--r,++c){
-                south_east |= 1ull << ((r * 8) + c);
+                south_west |= 1ull << ((r * 8) + c);
             }
             for(int r = row + 1, c = col + 1; r < 8 && c <8;++r,++c){
                 north_west |= 1ull << ((r * 8) + c);
@@ -154,8 +154,8 @@ namespace BitBoard{
             {
                 if(in_board(i+direction))
                     mask |= 1ull << (i+direction);
-            }
-            if(((1ull << i) | FILE_H) == FILE_H)
+                }
+                if(((1ull << i) | FILE_H) == FILE_H)
                 mask &= ~FILE_A;
             else if(((1ull << i) | FILE_A) == FILE_A)
                 mask &= ~FILE_H;
