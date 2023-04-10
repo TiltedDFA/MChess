@@ -152,7 +152,7 @@ namespace MoveGen
                     BitBoard::SLIDING_PIECE_MASKS[i][j]&
                     ~(BitBoard::SLIDING_PIECE_MASKS[i][j]&
                     (is_white ? WHITE_PIECES : BLACK_PIECES));
-                            
+                
 
             }
         }

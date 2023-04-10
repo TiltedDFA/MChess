@@ -7,10 +7,12 @@
 int main()
 {
     //Debug::print_bb(BitBoard::piece_masks[0][0],0);
-    Debug::print_bb(0x6F0000,true);
-    Debug::print_bb(0x6F0000 * 2,true);
-    Debug::print_bb(BitBoard::SLIDING_PIECE_MASKS[44][5]& ~(BitBoard::SLIDING_PIECE_MASKS[44][5] & 0x20000),44,true);
-    Debug::print_bb(BitBoard::SLIDING_PIECE_MASKS[44][5]& ~(BitBoard::SLIDING_PIECE_MASKS[44][5] & 0x4000000),44,true);
+    //Debug::print_bb(0x6F0000,true);
+   // Debug::print_bb(0x6F0000 * 2,true);
+   // Debug::print_bb(BitBoard::SLIDING_PIECE_MASKS[44][5]& ~(BitBoard::SLIDING_PIECE_MASKS[44][5] & 0x20000),44,true);
+    //Debug::print_bb(BitBoard::SLIDING_PIECE_MASKS[44][5]& ~(BitBoard::SLIDING_PIECE_MASKS[44][5] & 0x4000000),44,true);
+    Debug::print_bb(BitBoard::SLIDING_PIECE_MASKS[0][0],true);
+    //Debug::print_bb(BitBoard::pop_lsb(BitBoard::SLIDING_PIECE_MASKS[0][0]),true);
     // MoveGen::init();
     //FullBoard instance;
     //instance.load_from_fen(STARTING_FEN);

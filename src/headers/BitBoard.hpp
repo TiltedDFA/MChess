@@ -81,7 +81,7 @@ namespace BitBoard{
             {
                 mask = ~(FILE_H | FILE_G) & mask;
             }
-            else if(((1ull << i) | FILE_G) == FIL   E_G)
+            else if(((1ull << i) | FILE_G) == FILE_G)
             {
                 mask = (~FILE_A) & mask;
             }
@@ -92,6 +92,9 @@ namespace BitBoard{
            returnVal[i] = mask;
         }
         return returnVal;
+    }
+    inline constexpr bit_board pop_lsb(bit_board value)noexcept{
+        return value & (value - 1);
     }
     constexpr std::array<std::array<bit_board,8>,64> compute_sliding_masks(){
         std::array<std::array<bit_board,8>,64> temp_arry{};

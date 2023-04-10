@@ -3,6 +3,7 @@ project(MChess LANGUAGES CXX)
 set(BUILD_SHARED_LIBS OFF)
 include_directories(src/headers)
 include(FetchContent)
+SET(CMAKE_MAKE_PROGRAM ninja)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 2.6.x)
